@@ -1,0 +1,113 @@
+﻿@model  WebApp2.Models.Account.LoginCreds
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Ajax.BeginForm("Login", "Home", null,
+    new AjaxOptions { HttpMethod = "POST", OnBegin = "OnBegin", OnSuccess = "OnSuccess", OnFailure = "OnFailure" },
+    new { id = "myform" }))
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <div class="container">
+        <div class="logo mb-3">
+            <div class="col-md-12 text-center">
+                <h1>Login for the Database Migrator</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 center-block">
+                <div class="form ">
+                    <div class="form-group col-xs-12">
+                        <label for="exampleInputEmail1">Email address</label>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control small_inp_box lgreen" })
+                        <div class="display_block hght_1em">
+                            &nbsp;
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger hght_1em display_block" })
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="exampleInputEmail1">Password</label>
+                        @Html.TextBoxFor(m => m.PassWord, new { @class = "form-control small_inp_box lgreen" })
+                        <div class="display_block hght_1em">
+                            &nbsp;
+                            @Html.ValidationMessageFor(m => m.PassWord, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6 text-center ">
+                        <button id="btn_submit" type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <p><span>Don't have account?</span> @Html.ActionLink("Sign up here", "CreateAccount", "Account")</p>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <p>By signing up you accept our <a href="#">Terms Of Use</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            console.log("ready to rock and roll....");
+            $(".small_inp_box:first").focus();
+        });
+
+
+        function OnBegin() {
+            $(".small_inp_box").prop("disabled", true);
+            $("#btn_submit").prop("disabled", true);
+            $("#btn_submit").text("Processing", true);
+            btn_submit
+        }
+
+        function OnSuccess() {
+            $(".small_inp_box").prop("disabled", false);
+            $("#btn_submit").prop("disabled", false);
+            $("#btn_submit").text("Login");
+        }
+
+        function OnFailure() {
+            $(".small_inp_box:first").focus();
+            $(".small_inp_box").prop("disabled", false);
+            $("#btn_submit").prop("disabled", false);
+            $("#btn_submit").text("Login");
+        }
+
+        $(".small_inp_box").focusout(function () {
+            console.log("checking for invalids");
+            var err_msg = "";
+            var fv = $('#myform').validate();
+            if (!$(this).valid()) {
+                $(this).removeClass("lgreen");
+                $(this).addClass("lred");
+                console.log("invalid!");
+                var currentElement = this;
+                setTimeout(function () {
+                    let error = fv.errorList.filter(function (e) { return e.element == currentElement; })[0];
+                    err_msg = error.message;
+                    console.log(error.message);
+                });
+            }
+            else {
+                $(this).addClass("lgreen");
+                $(this).removeClass("lred");
+                console.log("valid!");
+            }
+            manage_errors(this, err_msg);
+        });
+
+        function manage_errors(obj, err_msg) {
+            //    $(".error div").addClass("red");
+        }
+
+
+    </script>
+}

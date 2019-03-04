@@ -1,0 +1,49 @@
+﻿@model WebApp2.Models.Contact.ContactMessage
+
+@{
+    ViewBag.Title = "Contact Information for John Dugger";
+}
+
+@using (Ajax.BeginForm("Contact", "Home",
+                    new AjaxOptions
+                    {
+                        OnSuccess = "OnSuccess",
+                        OnFailure = "OnFailure",
+                        LoadingElementId = "progress"
+                    }))
+{
+    <h2>@ViewBag.Title.</h2>
+
+    <address>
+        John Dugger<br />
+        techcoder99@cox.net<br />
+    </address>
+    <address>
+        <strong>Support:</strong>   <a href="mailto:techcoder99@cox.net">techcoder99@cox.net</a><br />
+    </address>
+
+    <h3>You may also leave a short message or note below.</h3>
+    <div class="container">
+        @Html.TextAreaFor(x => x.contact_message, 6, 150, new { @class = "form-control" })
+        <br />
+        <input type="submit" value="OK" />
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+        // A $( document ).ready() block.
+        $(document).ready(function () {
+            alert("Hello 2");
+        });
+
+        function OnSuccess(response) {
+            var message = "Message: " + " work on this";
+            alert(message);
+        }
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+    </script>
+}
