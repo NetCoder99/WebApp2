@@ -22,26 +22,6 @@ namespace WebApp2.Controllers
         [HttpPost]
         public ActionResult Login(LoginCreds model)
         {
-            //using (var ctx = new UserAccountDB())
-            //{
-            //    var query = from st in ctx.LoginCreds
-            //                where st.UserName == model.UserName
-            //                select st;
-            //    if (query.Count() > 0)
-            //    {
-            //        LoginCreds user = query.FirstOrDefault<LoginCreds>();
-            //        user.LoginAttempts++;
-            //        ctx.SaveChanges();
-            //    }
-            //    else
-            //    {
-            //        var login_creds = new LoginCreds() { UserName = model.UserName, PassWord = model.PassWord };
-            //        ctx.LoginCreds.Add(login_creds);
-            //        ctx.SaveChanges();
-            //    }
-
-            //}
-            //System.Threading.Thread.Sleep(500);
             return View();
         }
 
@@ -129,7 +109,7 @@ namespace WebApp2.Controllers
             UserAccount user_dtls = userAccountDB.UserDetails.Where(w => w.UserDetailId == ID).First();
             userAccountDB.UserDetails.Remove(user_dtls);
             userAccountDB.SaveChanges();
-            return View("ManageAccounts", userAccountDB.UserDetails.ToList());
+            return RedirectToAction("ManageAccounts");
         }
 
     }

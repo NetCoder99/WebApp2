@@ -39,37 +39,74 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PassWord)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DisplayName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrefEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PrefText)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "EditAccount", new { id=item.UserDetailId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserDetailId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassWord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrefEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrefText)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditAccount", new { id = item.UserDetailId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.UserDetailId },
+                                                     new { @class = "delete_click", onclick = "return ConfirmDelete('" + item.Email + "','" + item.UserDetailId +"');  " })
+
+            </td>
+        </tr>
+    }
 
 </table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            console.log("ready to rock and roll....");
+        });
+
+        function ConfirmDelete(name, id) {
+            bootbox.confirm({
+                message: "Delete this user: " + name + "?",
+                buttons: {
+                    confirm: {
+                        label: 'Yes'
+                    },
+                    cancel: {
+                        label: 'No'
+                    }
+                },
+                callback: function (result) {
+                    if (result)
+                    {
+                        var url = "Delete/" + id;
+                        console.log("redirect to url:" + url);
+                        window.location.href = url;
+                    }
+                    else
+                    { console.log("cancel delete"); }
+                }
+            });
+            return false;
+        };
+
+    </script>
+}

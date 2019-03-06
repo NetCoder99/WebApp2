@@ -116,22 +116,7 @@
             console.log("ready to rock and roll....");
             $(".small_inp_box:first").focus();
             $(".small_inp_box").addClass("lgreen");
-            
-            jQuery.validator.addMethod("nonnumeric",
-                function (value, element, params) {
-                    $.validator.messages.nonnumeric =
-                        jQuery.validator.format("This field cannot contain numeric characters.")
-                    return value.match(/\d+/g) == null;
-                },
-                $.validator.messages.nonnumeric
-            );
-            $(".phone_number").rules("add",
-                {
-                    nonnumeric: true,
-                    messages: {
-                        nonnumeric: "Phone number must be numeric."
-                    }
-                });
+           
         });
 
 

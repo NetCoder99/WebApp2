@@ -8,7 +8,10 @@
     <div class="col-xs-8">
         <div>
             @Html.ActionLink("Back to Manager Users", "ManageAccounts", "Account")
-            <span id="message" style="float:right; display:none;">Message</span>
+            <div id="message_div" style="display:inline;float:right;display:none;">
+                <img src="~/Content/Icons/success.png" style="height:18px;" />
+                <span id="message">Message</span>
+            </div>
         </div>
         <hr class="margin_bottom_none" />
         <strong>Required Fields: Need this for access to the web site.</strong>

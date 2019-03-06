@@ -48,9 +48,14 @@
             console.log("Your changes have been saved.");
             $("#message").text("Your changes have been saved.", true);
             $("#message").addClass("bold");
-            $("#message").show();
+
+            if ($('#message_div').is(":visible")) {
+                console.log("message_div is hidden");
+            }
+
+            $("#message_div").show();
             setTimeout(function () {
-                $("#message").hide();
+                $("#message_div").hide();
             }, 5000);
         }
 
