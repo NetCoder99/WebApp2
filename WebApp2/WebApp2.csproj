@@ -150,13 +150,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DataConnections\Class1.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account\NotifyPref.cs" />
     <Compile Include="Models\Account\UserAccount.cs" />
     <Compile Include="Models\Account\LoginCreds.cs" />
-    <Compile Include="Models\Account\AccountDb.cs" />
+    <Compile Include="DataConnections\UserAccountDB.cs" />
     <Compile Include="Models\Addresses\AddressDetails.cs" />
     <Compile Include="Models\Addresses\GetStatesListCAN.cs" />
     <Compile Include="Models\Addresses\GetStatesListMEX.cs" />
@@ -229,6 +230,10 @@
     <Content Include="Views\Home\PersonAjax.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\CreateAccount.cshtml" />
+    <Content Include="Views\Account\ManageAccounts.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\EditAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\SQLite\" />

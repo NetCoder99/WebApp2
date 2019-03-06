@@ -7,25 +7,29 @@ using System.Web;
 
 namespace WebApp2.Models.Account
 {
+    [Table("UserDetails", Schema = "WEBAPP2")]
     public class UserAccount
     {
-        public int UserAccountId { get; set; }
+        [Key]
+        public int UserDetailId { get; set; }
 
         [Required(ErrorMessage = "Email address is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [Index(IsUnique = true)]
         [StringLength(50)]
         [Display(Name = "Email Address")]
-        public string EmailAddress { get; set; }
+        public string Email { get; set; }
 
         [Display(Name = "Password")]
         [Required(ErrorMessage = "Password is required")]
         [StringLength(50)]
+        [Compare(nameof(PassWordConfirm), ErrorMessage = "Passwords don't match.")]
         public string PassWord { get; set; }
 
         [Display(Name = "Password Confirmation")]
         [Required(ErrorMessage = "Password confirmation is required")]
         [StringLength(50)]
+        [NotMapped]
         public string PassWordConfirm { get; set; }
 
         [Display(Name = "First Name")]
@@ -44,7 +48,8 @@ namespace WebApp2.Models.Account
 
         [Display(Name = "Phone Number")]
         [StringLength(25)]
-        public string PhoneNumber { get; set; }
+        [Phone]
+        public string Phone { get; set; }
 
         [Display(Name = "Email")]
         public bool PrefEmail { get; set; }

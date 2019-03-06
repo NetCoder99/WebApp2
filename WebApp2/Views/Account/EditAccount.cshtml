@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "EditAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm("EditAccount", "Account", new AjaxOptions { OnSuccess = "onSuccess" }))
+{
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="logo mb-3">
+            <div class="col-md-12 text-center">
+                <h2>Edit user account</h2>
+            </div>
+        </div>
+
+        @Html.Partial("Edit");
+
+        <div class="form-group col-xs-3 text-center "></div>
+        <div class="form-group col-xs-4 text-center ">
+            <button id="btn_submit" type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Save changes</button>
+        </div>
+        <div class="form-group col-xs-3 text-center "></div>
+
+    }
+}
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            console.log("ready to rock and roll....");
+            $(".small_inp_box:first").focus();
+            $(".small_inp_box").addClass("lgreen");
+
+            jQuery.validator.addMethod("nonnumeric",
+                function (value, element, params) {
+                    $.validator.messages.nonnumeric =
+                        jQuery.validator.format("This field cannot contain numeric characters.")
+                    return value.match(/\d+/g) == null;
+                },
+                $.validator.messages.nonnumeric
+            );
+
+        });
+
+        function onSuccess(result) {
+            console.log("Your changes have been saved.");
+            $("#message").text("Your changes have been saved.", true);
+            $("#message").addClass("bold");
+            $("#message").show();
+            setTimeout(function () {
+                $("#message").hide();
+            }, 5000);
+        }
+
+        function OnBegin() {
+            $(".small_inp_box").prop("disabled", true);
+            $("#btn_submit").prop("disabled", true);
+            $("#btn_submit").text("Processing", true);
+            btn_submit
+        }
+
+        function OnSuccess() {
+            $(".small_inp_box").prop("disabled", false);
+            $("#btn_submit").prop("disabled", false);
+            $("#btn_submit").text("Login");
+        }
+
+        function OnFailure() {
+            $(".small_inp_box").prop("disabled", false);
+            $("#btn_submit").prop("disabled", false);
+            $("#btn_submit").text("Login");
+        }
+
+        $(".small_inp_box").focusout(function () {
+            console.log("checking for invalids");
+            var err_msg = "";
+            var fv = $('#myform').validate();
+            if (!$(this).valid()) {
+                $(this).removeClass("lgreen");
+                $(this).addClass("lred");
+            }
+            else {
+                $(this).addClass("lgreen");
+                $(this).removeClass("lred");
+                console.log("valid!");
+            }
+            //manage_errors(this, err_msg);
+        });
+
+                            //function manage_errors(obj, err_msg) {
+                            //    //    $(".error div").addClass("red");
+                            //}
+
+
+    </script>
+}

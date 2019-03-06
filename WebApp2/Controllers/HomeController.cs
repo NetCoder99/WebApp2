@@ -30,6 +30,10 @@ namespace WebApp2.Controllers
             return View();
         }
 
+        public ActionResult Admin()
+        {
+            return View();
+        }
 
         public ActionResult PersonAjax()
         {

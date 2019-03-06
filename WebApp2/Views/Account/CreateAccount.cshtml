@@ -25,32 +25,32 @@
                 @Html.ActionLink("Back to login page", "Login")
             </div>
             <hr class="margin_bottom_none" />
-            <strong>Required Fields: Need this for access the web site.</strong>
+            <strong>Required Fields: Need this for access to the web site.</strong>
             <hr class="margin_top_none" />
-            <div class="form-group row">
-                <div class="form-group col-xs-6">
-                    @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
-                    @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger static_error" })
+            <div class="row margin_bottom_small">
+                <div class="form-group col-xs-6 margin_bottom_small">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger static_error" })
                 </div>
             </div>
 
             <div class="row">
-                <div class="form-group col-xs-6">
+                <div class="form-group col-xs-6 margin_bottom_small">
                     @Html.LabelFor(model => model.PassWord, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
                     @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger static_error" })
+                    <span class="pssword_match_error text-danger static_error"></span>
                 </div>
 
-                <div class="form-group col-xs-6">
+                <div class="form-group col-xs-6 margin_bottom_small">
                     @Html.LabelFor(model => model.PassWordConfirm, htmlAttributes: new { @class = "control-label " })
                     @Html.EditorFor(model => model.PassWordConfirm, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
                     @Html.ValidationMessageFor(model => model.PassWordConfirm, "", new { @class = "text-danger static_error pssword_confirm_error" })
-                    <span class="pssword_confirm_error2 text-danger static_error"></span>
                 </div>
             </div>
 
-            <hr class="margin_bottom_none" />
+            <hr class="margin_bottom_none margin_top_none" />
             <strong>Optional Fields: Personal Information</strong>
             <hr class="margin_top_none" />
 
@@ -76,9 +76,9 @@
                 </div>
 
                 <div class="form-group col-xs-6">
-                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
-                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger static_error" })
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control small_inp_box phone_number" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger static_error" })
                 </div>
             </div>
             <div class="row">
@@ -105,6 +105,7 @@
         <div class="form-group col-xs-4 text-center ">
             <button id="btn_submit" type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Create Account</button>
         </div>
+        <div class="form-group col-xs-3 text-center "></div>
 
     </div>
 }
@@ -115,6 +116,22 @@
             console.log("ready to rock and roll....");
             $(".small_inp_box:first").focus();
             $(".small_inp_box").addClass("lgreen");
+            
+            jQuery.validator.addMethod("nonnumeric",
+                function (value, element, params) {
+                    $.validator.messages.nonnumeric =
+                        jQuery.validator.format("This field cannot contain numeric characters.")
+                    return value.match(/\d+/g) == null;
+                },
+                $.validator.messages.nonnumeric
+            );
+            $(".phone_number").rules("add",
+                {
+                    nonnumeric: true,
+                    messages: {
+                        nonnumeric: "Phone number must be numeric."
+                    }
+                });
         });
 
 
@@ -144,42 +161,18 @@
             if (!$(this).valid()) {
                 $(this).removeClass("lgreen");
                 $(this).addClass("lred");
-                //console.log("invalid!");
-                //var currentElement = this;
-                //setTimeout(function () {
-                //    let error = fv.errorList.filter(function (e) { return e.element == currentElement; })[0];
-                //    err_msg = error.message;
-                //    console.log(error.message);
-                //});
             }
             else {
                 $(this).addClass("lgreen");
                 $(this).removeClass("lred");
                 console.log("valid!");
             }
-            manage_errors(this, err_msg);
+            //manage_errors(this, err_msg);
         });
 
-        $("#EmailAddress").focusout(function () {
-            console.log("Email:" + $("#EmailAddress").val());
-        });
-
-        $("#PassWordConfirm").focusout(function () {
-            console.log("checking passwords");
-            console.log("Password:" + $("#PassWord").val());
-            $(".pssword_confirm_error2").text("checking");
-            $(".pssword_confirm_error2").show();
-            if ($("#PassWordConfirm").val() != $("#PassWord").val()) {
-                console.log("Password confirm error");
-                $(".pssword_confirm_error2").text("Passwords must match");
-                $(".pssword_confirm_error2").show();
-            }
-
-        });
-
-        function manage_errors(obj, err_msg) {
-            //    $(".error div").addClass("red");
-        }
+        //function manage_errors(obj, err_msg) {
+        //    //    $(".error div").addClass("red");
+        //}
 
 
     </script>
