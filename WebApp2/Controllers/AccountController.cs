@@ -85,16 +85,12 @@ namespace WebApp2.Controllers
 
         // -------------------------------------------------------------------------------
         [HttpGet]
-        public ActionResult ManageAccounts()
+        public ActionResult ManageAccounts(string deleteMsg = null)
         {
             UserAccountDB userAccountDB = new UserAccountDB();
             List<UserAccount> model = userAccountDB.UserDetails.ToList();
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult ManageAccounts(UserAccount model)
-        {
-            System.Threading.Thread.Sleep(500);
+            if (deleteMsg != null)
+            { ViewBag.deleteMsg = deleteMsg; }
             return View(model);
         }
 
@@ -103,13 +99,15 @@ namespace WebApp2.Controllers
             return RedirectToAction("CreateAccount", "Account", new { ID = ID });
         }
 
-        public ActionResult Delete(int ID)
+        public ActionResult DeleteAccount(int ID)
         {
             UserAccountDB userAccountDB = new UserAccountDB();
             UserAccount user_dtls = userAccountDB.UserDetails.Where(w => w.UserDetailId == ID).First();
+            string lcldeleteMsg = "Account was deleted: " + user_dtls.Email;
             userAccountDB.UserDetails.Remove(user_dtls);
             userAccountDB.SaveChanges();
-            return RedirectToAction("ManageAccounts");
+            ViewBag.deleteMsg = "Account was deleted";
+            return RedirectToAction("ManageAccounts", new { deleteMsg = lcldeleteMsg });
         }
 
     }
