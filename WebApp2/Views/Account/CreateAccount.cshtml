@@ -22,7 +22,15 @@
         <div class="col-xs-2"></div>
         <div class="col-xs-8">
             <div>
-                @Html.ActionLink("Back to login page", "Login")
+                @if (@ViewBag.backLink == "ManageAccounts")
+                { 
+                    @Html.ActionLink("Back to Manage Accounts", "ManageAccounts") 
+                }
+                else
+                { 
+                    @Html.ActionLink("Back to login page", "Login")
+                }
+
             </div>
             <hr class="margin_bottom_none" />
             <strong>Required Fields: Need this for access to the web site.</strong>
@@ -38,14 +46,14 @@
             <div class="row">
                 <div class="form-group col-xs-6 margin_bottom_small">
                     @Html.LabelFor(model => model.PassWord, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
+                    @Html.PasswordFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
                     @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "text-danger static_error" })
                     <span class="pssword_match_error text-danger static_error"></span>
                 </div>
 
                 <div class="form-group col-xs-6 margin_bottom_small">
                     @Html.LabelFor(model => model.PassWordConfirm, htmlAttributes: new { @class = "control-label " })
-                    @Html.EditorFor(model => model.PassWordConfirm, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
+                    @Html.PasswordFor(model => model.PassWordConfirm, new { htmlAttributes = new { @class = "form-control small_inp_box" } })
                     @Html.ValidationMessageFor(model => model.PassWordConfirm, "", new { @class = "text-danger static_error pssword_confirm_error" })
                 </div>
             </div>
@@ -116,9 +124,9 @@
             console.log("ready to rock and roll....");
             $(".small_inp_box:first").focus();
             $(".small_inp_box").addClass("lgreen");
-           
+            $("input:password").addClass("lgreen");
+            $("input:password").addClass("form-control");
         });
-
 
         function OnBegin() {
             $(".small_inp_box").prop("disabled", true);
@@ -138,6 +146,21 @@
             $("#btn_submit").prop("disabled", false);
             $("#btn_submit").text("Login");
         }
+
+        $("input:password").focusout(function () {
+            console.log("checking for invalids");
+            var err_msg = "";
+            var fv = $('#myform').validate();
+            if (!$(this).valid()) {
+                $(this).removeClass("lgreen");
+                $(this).addClass("lred");
+            }
+            else {
+                $(this).addClass("lgreen");
+                $(this).removeClass("lred");
+                console.log("valid!");
+            }
+        });
 
         $(".small_inp_box").focusout(function () {
             console.log("checking for invalids");

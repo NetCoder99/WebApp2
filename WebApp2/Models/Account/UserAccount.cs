@@ -21,6 +21,7 @@ namespace WebApp2.Models.Account
         public string Email { get; set; }
 
         [Display(Name = "Password")]
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required")]
         [StringLength(50)]
         [Compare(nameof(PassWordConfirm), ErrorMessage = "Passwords don't match.")]

@@ -21,6 +21,7 @@ namespace WebApp2.Models.Account
 
         [Required(ErrorMessage = "Password is required")]
         [StringLength(50)]
+        [DataType(DataType.Password)]
         public string PassWord { get; set; }
 
 

@@ -8,7 +8,7 @@
 <h2>ManageAccounts</h2>
 
 <div>
-    @Html.ActionLink("Create New", "CreateAccount", "Account")
+    @Html.ActionLink("Create New", "CreateAccount", "Account", new { backLink= "ManageAccounts" }, null)
     <div id="message_div" style="display:inline;float:right;display:none;">
         <img src="~/Content/Icons/success.png" style="height:18px;" />
         <span id="message"></span>
