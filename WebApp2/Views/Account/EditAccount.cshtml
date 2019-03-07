@@ -46,6 +46,11 @@
 
         function onSuccess(result) {
             console.log("Your changes have been saved.");
+
+            $(".small_inp_box").prop("disabled", false);
+            $("#btn_submit").prop("disabled", false);
+            $("#btn_submit").text("Login");
+
             $("#message").text("Your changes have been saved.", true);
             $("#message").addClass("bold");
 
@@ -64,12 +69,6 @@
             $("#btn_submit").prop("disabled", true);
             $("#btn_submit").text("Processing", true);
             btn_submit
-        }
-
-        function OnSuccess() {
-            $(".small_inp_box").prop("disabled", false);
-            $("#btn_submit").prop("disabled", false);
-            $("#btn_submit").text("Login");
         }
 
         function OnFailure() {
@@ -91,13 +90,7 @@
                 $(this).removeClass("lred");
                 console.log("valid!");
             }
-            //manage_errors(this, err_msg);
         });
-
-                            //function manage_errors(obj, err_msg) {
-                            //    //    $(".error div").addClass("red");
-                            //}
-
 
     </script>
 }
